@@ -64,8 +64,12 @@ def optimum_policy2D():
         [[999 for row in range(len(grid[0]))] for col in range(len(grid))],
         [[999 for row in range(len(grid[0]))] for col in range(len(grid))]]
 
+    policy = [[[' ' for row in range(len(grid[0]))] for col in range(len(grid))],
+        [[' ' for row in range(len(grid[0]))] for col in range(len(grid))],
+        [[' ' for row in range(len(grid[0]))] for col in range(len(grid))],
+        [[' ' for row in range(len(grid[0]))] for col in range(len(grid))]]
+
     policy2D = [[' ' for row in range(len(grid[0]))] for col in range(len(grid))]
-    policy2D[goal[0]][goal[1]] = '*'
 
     change = True
 
@@ -78,6 +82,7 @@ def optimum_policy2D():
 
                     if goal[0] == x and goal[1] == y:
                         if value[t][x][y] > 0:
+                            policy[t][x][y] = '*'
                             value[t][x][y] = 0
                             change = True
 
@@ -88,61 +93,59 @@ def optimum_policy2D():
                             y2 = -1
                             t2 = -1
 
-                            # NB: here I check how I could get to (t,x,y):
-                            #   (t,x,y) - current position
-                            #   (t2,x2,y2) - previous position
+                            #
 
                             if action[a] == -1:    # right turn
                                 if t == 0:
-                                    x2 = x + 1
-                                    y2 = y
-                                    t2 = 1
-                                elif t == 1:
                                     x2 = x
                                     y2 = y + 1
-                                    t2 = 2
-                                elif t == 2:
+                                    t2 = 3
+                                elif t == 1:
                                     x2 = x - 1
                                     y2 = y
-                                    t2 = 3
-                                elif t == 3:
+                                    t2 = 0
+                                elif t == 2:
                                     x2 = x
                                     y2 = y - 1
-                                    t2 = 0
+                                    t2 = 1
+                                elif t == 3:
+                                    x2 = x + 1
+                                    y2 = y
+                                    t2 = 2
                             elif action[a] == 0:   # no turn
                                 if t == 0:
-                                    x2 = x + 1
+                                    x2 = x - 1
                                     y2 = y
                                     t2 = t
                                 elif t == 1:
                                     x2 = x
-                                    y2 = y + 1
+                                    y2 = y - 1
                                     t2 = t
                                 elif t == 2:
-                                    x2 = x - 1
+                                    x2 = x + 1
                                     y2 = y
                                     t2 = t
                                 elif t == 3:
                                     x2 = x
-                                    y2 = y - 1
+                                    y2 = y + 1
                                     t2 = t
                             elif action[a] == 1:   # left turn
                                 if t == 0:
-                                    x2 = x + 1
-                                    y2 = y
-                                    t2 = 3
-                                elif t == 1:
-                                    x2 = x
-                                    y2 = y + 1
-                                    t2 = 0
-                                elif t == 2:
-                                    x2 = x - 1
-                                    y2 = y
-                                    t2 = 1
-                                elif t == 3:
                                     x2 = x
                                     y2 = y - 1
+                                    t2 = 1
+                                elif t == 1:
+                                    x2 = x + 1
+                                    y2 = y
                                     t2 = 2
+                                elif t == 2:
+                                    x2 = x
+                                    y2 = y + 1
+                                    t2 = 3
+                                elif t == 3:
+                                    x2 = x - 1
+                                    y2 = y
+                                    t2 = 0
 
                             if x2 >= 0 and x2 < len(grid) and y2 >= 0 and y2 < len(grid[0]) and grid[x2][y2] == 0:
                                 v2 = value[t2][x2][y2] + cost[a]
@@ -150,8 +153,71 @@ def optimum_policy2D():
                                 if v2 < value[t][x][y]:
                                     change = True
                                     value[t][x][y] = v2
-                                    print "value[t][x][y] = ", t, x, y, v2
-                                    policy2D[x2][y2] = action_name[a]
+                                    policy[t][x][y] = action_name[a]
+
+    x = init[0]
+    y = init[1]
+    t = init[2]
+
+    while 1:
+        name = policy[t][x][y]
+        policy2D[x][y] = name
+
+        if name == 'R':    # right turn
+            if t == 0:
+                x = x
+                y = y + 1
+                t = 3
+            elif t == 1:
+                x = x - 1
+                y = y
+                t = 0
+            elif t == 2:
+                x = x
+                y = y - 1
+                t = 1
+            elif t == 3:
+                x = x + 1
+                y = y
+                t = 2
+        elif name == '#':   # no turn
+            if t == 0:
+                x = x - 1
+                y = y
+                t = t
+            elif t == 1:
+                x = x
+                y = y - 1
+                t = t
+            elif t == 2:
+                x = x + 1
+                y = y
+                t = t
+            elif t == 3:
+                x = x
+                y = y + 1
+                t = t
+        elif name == 'L':   # left turn
+            if t == 0:
+                x = x
+                y = y - 1
+                t = 1
+            elif t == 1:
+                x = x + 1
+                y = y
+                t = 2
+            elif t == 2:
+                x = x
+                y = y + 1
+                t = 3
+            elif t == 3:
+                x = x - 1
+                y = y
+                t = 0
+
+        if goal[0] == x and goal[1] == y:
+            policy2D[x][y] = '*'
+            break
 
     return policy2D # Make sure your function returns the expected grid.
 
