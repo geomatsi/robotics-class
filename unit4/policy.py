@@ -14,12 +14,12 @@
 # ----------
 
 grid = [[0, 0, 0, 0, 0, 0],
-        [0, 1, 1, 1, 1, 0],
+        [0, 0, 0, 1, 1, 0],
         [0, 1, 0, 0, 0, 0],
-        [0, 1, 0, 1, 1, 1],
         [0, 1, 0, 0, 0, 0],
-        [0, 1, 1, 1, 1, 0],
-        [0, 0, 0, 0, 0, 0]]
+        [0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 1, 1],
+        [0, 1, 0, 0, 0, 0]]
 
 init = [0, 0]
 goal = [len(grid)-1, len(grid[0])-1]
@@ -72,11 +72,14 @@ def optimum_policy():
                         value[x2][y2] = v2
                         policy[x2][y2] = delta_name_inv[i]
 
-    for i in range(len(value)):
-        print value[i]
+    return value, policy
 
-    return policy #make sure your function returns a grid of values as demonstrated in the previous video.
+val, pol = optimum_policy()
 
-res = optimum_policy()
-for e in range(len(res)):
-    print res[e]
+for e in range(len(val)):
+    print val[e]
+
+print " "
+
+for e in range(len(pol)):
+    print pol[e]
