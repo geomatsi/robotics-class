@@ -93,7 +93,7 @@ def optimum_policy2D():
                             y2 = -1
                             t2 = -1
 
-                            #
+                            # where we can get from current (x,y): find (x2,y2)
 
                             if action[a] == -1:    # right turn
                                 if t == 0:
@@ -154,6 +154,8 @@ def optimum_policy2D():
                                     change = True
                                     value[t][x][y] = v2
                                     policy[t][x][y] = action_name[a]
+
+    # set initial position and find 2D policy from 3D value matrix
 
     x = init[0]
     y = init[1]
