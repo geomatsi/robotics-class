@@ -30,7 +30,7 @@ from math import *
 import random
 
 # --------
-# 
+#
 # some top level parameters
 #
 
@@ -302,10 +302,10 @@ def particle_filter(motions, measurements, N=500): # I know it's tempting, but d
     # --------
     #
     # Update particles
-    #     
+    #
 
     for t in range(len(motions)):
-    
+
         # motion update (prediction)
         p2 = []
         for i in range(N):
@@ -329,7 +329,7 @@ def particle_filter(motions, measurements, N=500): # I know it's tempting, but d
                 index = (index + 1) % N
             p3.append(p[index])
         p = p3
-    
+
     return get_position(p)
 
 ## IMPORTANT: You may uncomment the test cases below to test your code.
