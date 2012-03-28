@@ -111,12 +111,12 @@ def stochastic_value():
                             if xA >= 0 and xA < len(grid) and yA >= 0 and yA < len(grid[0]) and grid[xA][yA] == 0:
                                 vA = value[xA][yA]
                             else:
-                                vA = 100
+                                vA = collision_cost
 
                             if xB >= 0 and xB < len(grid) and yB >= 0 and yB < len(grid[0]) and grid[xB][yB] == 0:
                                 vB = value[xB][yB]
                             else:
-                                vB = 100
+                                vB = collision_cost
 
                             v2 = success_prob*value[x2][y2] + failure_prob*(vA + vB) + cost_step
 
