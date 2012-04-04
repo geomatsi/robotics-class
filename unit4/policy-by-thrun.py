@@ -1,11 +1,11 @@
 # ----------
 # User Instructions:
-# 
+#
 # Create a function optimum_policy() that returns
 # a grid which shows the optimum policy for robot
 # motion. This means there should be an optimum
 # direction associated with each navigable cell.
-# 
+#
 # un-navigable cells must contain an empty string
 # WITH a space, as shown in the previous video.
 # Don't forget to mark the goal with a *

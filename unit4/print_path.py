@@ -3,15 +3,15 @@
 #
 # Modify the the search function so that it returns
 # a shortest path as follows:
-# 
+#
 # [['>', 'v', ' ', ' ', ' ', ' '],
 #  [' ', '>', '>', '>', '>', 'v'],
 #  [' ', ' ', ' ', ' ', ' ', 'v'],
 #  [' ', ' ', ' ', ' ', ' ', 'v'],
 #  [' ', ' ', ' ', ' ', ' ', '*']]
 #
-# Where '>', '<', '^', and 'v' refer to right, left, 
-# up, and down motions. NOTE: the 'v' should be 
+# Where '>', '<', '^', and 'v' refer to right, left,
+# up, and down motions. NOTE: the 'v' should be
 # lowercase.
 #
 # Your function should be able to do this for any
