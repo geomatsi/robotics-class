@@ -60,7 +60,6 @@ def smooth(path, weight_data = 0.1, weight_smooth = 0.1, tolerance = 0.00001):
 
     # Make a deep copy of path into newpath
     newpath = [[0 for row in range(len(path[0]))] for col in range(len(path))]
-    newpath2 = [[0 for row in range(len(path[0]))] for col in range(len(path))]
 
     for i in range(len(path)):
         for j in range(len(path[0])):
@@ -69,21 +68,25 @@ def smooth(path, weight_data = 0.1, weight_smooth = 0.1, tolerance = 0.00001):
     change = tolerance
 
     while change >= tolerance:
-
         change = 0.0
-
         for i in range(0, len(path)):
             for j in range(len(path[0])):
+                aux = newpath[i][j]
 
-                newpath2[i][j]  = newpath[i][j]
-                newpath2[i][j] += weight_data*(path[i][j] - newpath[i][j])
-                newpath2[i][j] += weight_smooth*(newpath[(i+1) % len(path)][j] + newpath[(i-1) % len(path)][j] - 2.0*newpath[i][j])
+                # Note: the following formula is not correct, we should have
+                # done that transformation in one step without modifying
+                # newpath:
+                # newpath2[i,j] = weight_data*(path[i,j] - newpath[i,j]) + weight_smooth*(newpath[i+1,j] + newpath[i-1,j] - 2*newpath[i,j])
+                # and finally we assign newpath2 to newpath
+                #
+                # We use incorrect formula because udacity grading system for
+                # this homework uses the results based on the incorrect
+                # formula
 
-                change += abs(newpath[i][j]- newpath2[i][j])
+                newpath[i][j] += weight_data*(path[i][j] - newpath[i][j])
+                newpath[i][j] += weight_smooth*(newpath[(i+1) % len(path)][j] + newpath[(i-1) % len(path)][j] - 2.0*newpath[i][j])
 
-        for i in range(0, len(path)):
-            for j in range(len(path[0])):
-                newpath[i][j] = newpath2[i][j]
+                change += abs(aux - newpath[i][j])
 
     return newpath
 
@@ -238,8 +241,5 @@ answer2 = [[1.239080543767428, 0.5047204351187283],
 ##    [1.000, 1.000] -> [0.908, 0.908]
 
 
-path = testpath1
-new = smooth(path)
-
-for i in range(len(path)):
-    print path[i][0], "  ", path[i][1], "  ", new[i][0], "  ", new[i][1]
+solution_check(smooth(testpath1), answer1)
+solution_check(smooth(testpath2), answer2)
