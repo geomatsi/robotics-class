@@ -1,6 +1,6 @@
 # Write a program that will iteratively update and
-# predict based on the location measurements 
-# and inferred motions shown below. 
+# predict based on the location measurements
+# and inferred motions shown below.
 
 def update(mean1, var1, mean2, var2):
     new_mean = (var2 * mean1 + var1 * mean2) / (var1 + var2)

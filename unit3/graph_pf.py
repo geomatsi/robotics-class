@@ -196,7 +196,7 @@ def get_position(p):
         # orientation is tricky because it is cyclic. By normalizing
         # around the first particle we are somewhat more robust to
         # the 0=2pi problem
-        orientation += (((p[i].orientation - p[0].orientation + pi) % (2.0 * pi)) 
+        orientation += (((p[i].orientation - p[0].orientation + pi) % (2.0 * pi))
                         + p[0].orientation - pi)
     return [x / len(p), y / len(p), orientation / len(p)]
 

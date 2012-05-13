@@ -62,7 +62,7 @@ def sense(p, Z):
     for i in range(rows):
         for j in range(cols):
             q[i][j] = q[i][j] / s
-    
+
     return q
 
 #
